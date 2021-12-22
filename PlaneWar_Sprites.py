@@ -8,7 +8,6 @@ from pygame import *
 import pygame
 from pygame.sprite import *
 
-
 # 屏幕大小的常量
 SCREEN_RECT = pygame.Rect(0, 0, 480, 700)
 #敌机大小常量
@@ -37,7 +36,7 @@ class GameSprite(Sprite):
 class Background(GameSprite):
     '''游戏背景精灵类'''
     def __init__(self,is_alt = False) -> None:
-        super().__init__('./images/background.png')
+        super().__init__('./PlaneWar/images/background.png')
     def update(self): 
         pass
     pass
@@ -52,7 +51,7 @@ class Bullet(GameSprite):
 class EnemyBullet(Bullet):
     '''敌机子弹类'''
     def __init__(self,enemy) -> None:
-        self.imageName = './images/bullet1.png'
+        self.imageName = './PlaneWar/images/bullet1.png'
         super().__init__(self.imageName)
         #设置子弹发射的位置
         self.rect.y = enemy.rect.y + 20
@@ -71,7 +70,7 @@ class EnemyBullet(Bullet):
 class EnemyPlane(GameSprite):
     '''敌机类'''
     def __init__(self) -> None:
-        self.imageName = './images/enemy1.png'
+        self.imageName = './PlaneWar/images/enemy1.png'
         super().__init__(self.imageName)
         self.speed = 2  #确定敌机移动速度
         self.rect.y = random.randrange(0,150,40)   #确定敌机出现的初始Y坐标值
@@ -114,32 +113,32 @@ class EnemyPlane(GameSprite):
             self.moveLeft()
             pass
         if self.isAlive == False:
-            '''当飞机被击中时连着四次更新飞机的image路径以达到爆炸效果图片'''
+            '''当飞机被击中时连着四次更新飞机的image路径以达到爆炸的效果'''
             self.X = self.rect.x
             self.Y = self.rect.y
             if self.count == 0:
-                self.image = pygame.image.load('./images/enemy1_down1.png')
+                self.image = pygame.image.load('./PlaneWar/images/enemy1_down1.png')
                 self.rect = self.image.get_rect()
                 self.rect.x = self.X
                 self.rect.y = self.Y
                 self.count += 1
                 pass
             elif self.count == 1:
-                self.image = pygame.image.load('./images/enemy1_down1.png')
+                self.image = pygame.image.load('./PlaneWar/images/enemy1_down1.png')
                 self.rect.size = self.image.get_size()
                 self.rect.x = self.X
                 self.rect.y = self.Y
                 self.count += 1
                 pass
             elif self.count == 2:
-                self.image = pygame.image.load('./images/enemy1_down1.png')
+                self.image = pygame.image.load('./PlaneWar/images/enemy1_down1.png')
                 self.rect.size = self.image.get_size()
                 self.rect.x = self.X
                 self.rect.y = self.Y
                 self.count += 1
                 pass
             elif self.count == 3:
-                self.image = pygame.image.load('./images/enemy1_down1.png')
+                self.image = pygame.image.load('./PlaneWar/images/enemy1_down1.png')
                 self.rect.size = self.image.get_size()
                 self.rect.x = self.X
                 self.rect.y = self.Y
@@ -148,12 +147,14 @@ class EnemyPlane(GameSprite):
             else:
                 #在爆炸后"自杀"
                 self.kill()
+                
+                
         pass
     pass
 class HeroBullet(Bullet):
     '''英雄子弹类'''
     def __init__(self,hero) -> None:
-        self.imageName = './images/bullet2.png'
+        self.imageName = './PlaneWar/images/bullet2.png'
         super().__init__(self.imageName)
         self.rect.x = hero.rect.x + 48.5
         self.rect.y = hero.rect.y - 11
@@ -170,7 +171,7 @@ class HeroBullet(Bullet):
 class Hero(GameSprite):
     '''英雄飞机类'''
     def __init__(self) -> None:
-        self.imageName = './images/me1.png'
+        self.imageName = './PlaneWar/images/me1.png'
         super().__init__(self.imageName)
         self.rect.x = 189
         self.rect.y = 574
@@ -189,6 +190,16 @@ class Hero(GameSprite):
             self.rect.x += self.speed
             pass
         pass
+    def moveDown(self):
+        if self.rect.y < SCREEN_RECT.height - HERO_RECT.height:
+            self.rect.y += self.speed
+            pass
+        pass
+    def moveUp(self):
+        if self.rect.y > SCREEN_RECT.height/2:
+            self.rect.y -= self.speed
+            pass
+        pass
     def shoot(self):
         '''发射子弹函数'''
         bullet = HeroBullet(self)
@@ -200,28 +211,28 @@ class Hero(GameSprite):
             self.X = self.rect.x
             self.Y = self.rect.y
             if self.count == 0:
-                self.image = pygame.image.load('./images/me_destroy_1.png')
+                self.image = pygame.image.load('./PlaneWar/images/me_destroy_1.png')
                 self.rect = self.image.get_rect()
                 self.rect.x = self.X
                 self.rect.y = self.Y
                 self.count += 1
                 pass
             elif self.count == 1:
-                self.image = pygame.image.load('./images/me_destroy_2.png')
+                self.image = pygame.image.load('./PlaneWar/images/me_destroy_2.png')
                 self.rect.size = self.image.get_size()
                 self.rect.x = self.X
                 self.rect.y = self.Y
                 self.count += 1
                 pass
             elif self.count == 2:
-                self.image = pygame.image.load('./images/me_destroy_3.png')
+                self.image = pygame.image.load('./PlaneWar/images/me_destroy_3.png')
                 self.rect.size = self.image.get_size()
                 self.rect.x = self.X
                 self.rect.y = self.Y
                 self.count += 1
                 pass
             elif self.count == 3:
-                self.image = pygame.image.load('./images/me_destroy_4.png')
+                self.image = pygame.image.load('./PlaneWar/images/me_destroy_4.png')
                 self.rect.size = self.image.get_size()
                 self.rect.x = self.X
                 self.rect.y = self.Y
@@ -230,42 +241,44 @@ class Hero(GameSprite):
             else:
                 self.kill()
                 #英雄爆炸后游戏结束
-                gameOver()
+                #gameOver()
                 pass
             pass
         pass
     pass
-# class Button(GameSprite):
-#     '''按钮精灵'''
-#     def __init__(self, imageName,type) -> None:
-#         super().__init__(imageName)
-#         self.type = type
-#         pass
-#     def setXY(self):
-#         if type == 'AGAIN':
-#             self.rect.x = 240-150
-#             self.rect.y = 300
-#             pass
-#         elif type == 'OVER':
-#             self.rect.x = 240-150
-#             self.rect.y = 300+59
-#             pass
-#         elif type == 'PAUSE':
-#             self.rect.x = 0
-#             self.rect.y = 655
-#             pass
-#         elif type == 'BEGIN':
-#             self.rect.x = 0
-#             self.rect.y = 655
-#             pass
-#         pass
-#     def update(self):
-#         pass       
-#     pass
-def gameOver():
-        pygame.quit()
-        exit()
+class Button(GameSprite):
+    '''按钮精灵'''
+    def __init__(self,imageName,type) -> None:
+        super().__init__(imageName)
+        self.setPosition(type)
+        pass
+    def setPosition(self,type):
+        if type == 'AGAIN':
+            self.rect.x = 240-150
+            self.rect.y = 300
+            pass
+        elif type == 'OVER':
+            self.rect.x = 240-150
+            self.rect.y = 300+59
+            pass
+        elif type == 'PAUSE':
+            self.rect.x = 0
+            self.rect.y = 655
+            pass
+        elif type == 'BEGIN':
+            self.rect.x = 0
+            self.rect.y = 655
+            pass
         pass
     
-a = pygame.image.load('./images/pause_nor.png')
+    def update(self):
+        pass       
+    pass
+def gameOver():
+        pygame.quit()
+        
+       # exit()
+        pass
+    
+a = pygame.image.load('./PlaneWar/images/pause_nor.png')
 print(a.get_height(),a.get_width())
